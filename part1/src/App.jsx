@@ -1,5 +1,15 @@
 import { useState } from "react";
 
+const indexOfMax = (arr) => {
+  let maxIndex = 0;
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > arr[maxIndex]) {
+      maxIndex = i;
+    }
+  }
+  return maxIndex;
+};
+
 const Button = (props) => {
   return <button onClick={props.handleClick}>{props.text}</button>;
 };
@@ -29,8 +39,12 @@ const App = () => {
     votes_copy[selected] += 1;
     setVotes(votes_copy);
   };
+
+  const indexOfMaxVotes = indexOfMax(votes);
+
   return (
     <>
+      <h1>Anecdote of the day</h1>
       <div>{anecdotes[selected]}</div>
       <div>has {votes[selected]} votes</div>
       <Button handleClick={handleVote} text="vote" />
@@ -38,6 +52,9 @@ const App = () => {
         handleClick={() => setSelected(getRandomInt(anecdotes.length))}
         text="next anecdote"
       />
+      <h1>Anecdote with most votes</h1>
+      <div>{anecdotes[indexOfMaxVotes]}</div>
+      <div>has {votes[indexOfMaxVotes]} votes</div>
     </>
   );
 };
