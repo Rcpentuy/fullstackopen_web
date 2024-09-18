@@ -4,11 +4,11 @@ const Button = (props) => {
   return <button onClick={props.handleClick}>{props.text}</button>;
 };
 
-const Display = (props) => {
+const StatisticsLine = (props) => {
   return (
-    <p>
-      {props.text} {props.value}
-    </p>
+    <tr>
+      <td>{props.text}</td> <td>{props.value}</td>
+    </tr>
   );
 };
 
@@ -19,12 +19,12 @@ const Statistics = (props) => {
     return (
       <>
         <h1>statistics</h1>
-        <Display value={good} text="good" />
-        <Display value={neutral} text="neutral" />
-        <Display value={bad} text="bad" />
-        <Display value={all} text="all" />
-        <Display value={(good - bad) / all} text="average" />
-        <Display value={`${(100 * good) / all}%`} text="positive" />
+        <StatisticsLine value={good} text="good" />
+        <StatisticsLine value={neutral} text="neutral" />
+        <StatisticsLine value={bad} text="bad" />
+        <StatisticsLine value={all} text="all" />
+        <StatisticsLine value={(good - bad) / all} text="average" />
+        <StatisticsLine value={`${(100 * good) / all}%`} text="positive" />
       </>
     );
   } else {
