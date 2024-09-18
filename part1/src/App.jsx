@@ -1,52 +1,41 @@
-const App = () => {
-  const course = {
-    name: "Half Stack application development",
-    parts: [
-      { name: "Fundamentals of React", exercises: 10 },
-      { name: "Using props to pass data", exercises: 7 },
-      { name: "State of a component", exercises: 14 },
-    ],
-  };
-  return (
-    <div>
-      <Header course={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
-    </div>
-  );
+import { useState } from "react";
+
+const Button = (props) => {
+  return <button onClick={props.handleClick}>{props.text}</button>;
 };
 
-const Header = (props) => {
-  return <h1>{props.course}</h1>;
-};
-
-const Content = (props) => {
-  const { name: part1, exercises: exercises1 } = props.parts[0];
-  const { name: part2, exercises: exercises2 } = props.parts[1];
-  const { name: part3, exercises: exercises3 } = props.parts[2];
-  return (
-    <>
-      {" "}
-      <Part part={part1} exercises={exercises1} />
-      <Part part={part2} exercises={exercises2} />
-      <Part part={part3} exercises={exercises3} />
-    </>
-  );
-};
-
-const Part = (props) => {
+const Display = (props) => {
   return (
     <p>
-      {props.part} {props.exercises}
+      {props.text} {props.value}
     </p>
   );
 };
 
-const Total = (props) => {
-  const { part1, exercises1 } = props.parts[0];
-  const { part2, exercises2 } = props.parts[1];
-  const { part3, exercises3 } = props.parts[2];
-  return <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>;
+const App = () => {
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  return (
+    <div>
+      <h1>give feedback</h1>
+      <Button handleClick={() => setGood(good + 1)} text="good" />
+      <Button handleClick={() => setNeutral(neutral + 1)} text="neutral" />
+      <Button handleClick={() => setBad(bad + 1)} text="bad" />
+      <h1>statistics</h1>
+      <Display value={good} text="good" />
+      <Display value={neutral} text="neutral" />
+      <Display value={bad} text="bad" />
+      <Display value={good + neutral + bad} text="all" />
+      <Display value={(good - bad) / (good + neutral + bad)} text="average" />
+      <Display
+        value={`${(100 * good) / (good + neutral + bad)}%`}
+        text="positive"
+      />
+    </div>
+  );
 };
 
 export default App;
